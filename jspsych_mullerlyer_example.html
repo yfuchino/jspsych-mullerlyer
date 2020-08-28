@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>muller-lyer</title>
+    <!-- specified a directly path to graphics.js, as I wrote this script using graphics.js. -->
+    <script src="https://cdn.anychart.com/js/latest/graphics.min.js"></script>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <!-- <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script> -->
+    <script src="js/jspsych-mullerlyer-keyboard-response.js"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+
+    
+</body>
+<script>
+    var timeline = [];
+
+    var trial = {
+        type:'mullerlyer-keyboard-response',
+        prompt:'Please adjust the length of the right line to equal the left line pressing the arrow keys(← or →)'+
+        '<br>When you think the two lines are of equal length, press the “Next” button.',
+        prompt_location:'above',
+        button_label: 'next',
+        wing_ang:35,
+        wing_lngth:50,
+        horizontal_lngth:250,
+        xaxis:Math.floor(Math.random() * 350) + 350,
+        on_finish: function(data){
+            if (data.key_press == 46) {
+                jsPsych.endExperiment('The measurement was ended.');
+            }
+        }
+    };
+    timeline.push(trial);
+
+    /* start the experiment */
+    jsPsych.init({
+        timeline: timeline,
+        on_finish: function() {
+        jsPsych.data.displayData('csv');
+        }
+    })
+</script>
+</html>
